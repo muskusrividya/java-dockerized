@@ -1,16 +1,16 @@
 pipeline {
     agent { label 'master' }
     stages {
-        stage('Build') {
+        stage('compile') {
             agent { label 'dev' }
             steps {
-                echo 'Building..'
+                sh 'mvn clean install'
             }
         }
-        stage('Test') {
-            agent { label 'staging' }
+        stage('build') {
+            agent { label 'dev' }
             steps {
-                echo 'Testing..'
+                sh 'docker build -t testdev .'
             }
         }
         stage('Deploy') {
